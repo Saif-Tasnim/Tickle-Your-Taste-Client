@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
@@ -28,7 +29,9 @@ export const useAxiosSecure = () => {
           (error.response.status === 401 || error.response.status === 403)
         ) {
           logOut().then(() => {
-            navigate("/login");
+            toast.error("Please login first");
+            navigate("/");
+            localStorage.setItem("route", "/");
           });
         }
         return Promise.reject(error);

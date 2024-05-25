@@ -2,34 +2,38 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { LoadingPage } from "../LoadingPage";
 import { PRIVATE_ROUTE, PUBLIC_ROUTE } from "../../static/routes/routes";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAxiosSecure } from "../../hooks/useAxiosSecure";
 
 const Header = () => {
-  const { user, loading, logOut, googleSignIn } = useContext(AuthContext);
+  const { user, logOut, googleSignIn } = useContext(AuthContext);
   const [activeRoute, setActiveRoute] = useState(
     localStorage.getItem("route") || "/"
   );
   const navigate = useNavigate();
+  const location = useLocation();
   const [axiosSecure] = useAxiosSecure();
 
   const { data: userData = {} } = useQuery({
     queryKey: ["email", user?.email],
-    enabled: !!user?.email,
     queryFn: async () => {
-      if (user?.email) {
+      if (user?.email && localStorage.getItem("access-token")) {
         const res = await axiosSecure.get(`/users/${user.email}`);
         return res.data;
       }
       return {};
     },
+    enabled: !!user?.email,
   });
 
-
   const navBar = user ? PRIVATE_ROUTE : PUBLIC_ROUTE;
+
+  if (!user && location.state?.from?.pathname) {
+    toast.error("log-in first please");
+  }
 
   useEffect(() => {
     setActiveRoute(localStorage.getItem("route"));
@@ -63,6 +67,8 @@ const Header = () => {
             } else {
               toast.success(`logged in as ${res.user.displayName}`);
             }
+
+            window.location.reload();
           })
           .catch((err) => {
             toast.error(err.message);
@@ -72,10 +78,6 @@ const Header = () => {
         toast.error(err.message);
       });
   };
-
-  if (loading) {
-    return <LoadingPage />;
-  }
 
   return (
     <div className="fixed w-full h-16 flex justify-between items-center bg-purple-100 z-40 px-5">

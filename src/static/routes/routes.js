@@ -21,6 +21,6 @@ export const PRIVATE_ROUTE = [
     },
     {
         href: "/add-recipes",
-        label: "Recipes",
+        label: "Add recipes",
     },
 ]

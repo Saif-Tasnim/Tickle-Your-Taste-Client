@@ -60,7 +60,8 @@ const Footer = () => {
       </div>
 
       <div className="py-3 text-center text-sm">
-        &copy; all rights reserved to <span className="font-bold text-base">Tickle-Your-Taste</span>
+        &copy; all rights reserved to{" "}
+        <span className="font-bold text-base">Tickle-Your-Taste</span>
       </div>
     </section>
   );

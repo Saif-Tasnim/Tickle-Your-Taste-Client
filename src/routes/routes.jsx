@@ -1,9 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import { ErrorPage } from "../component/ErrorPage";
-import HomePage from "../pages/HomePage/HomePage";
 import PrivateRoutes from "./private-routes";
-import AddRecipe from "../pages/AddRecipe/AddRecipe";
+import {
+  AddRecipe,
+  BuyCoinsPage,
+  HomePage,
+  RecipeDetails,
+  RecipeList,
+} from "../pages";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +19,18 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "recipes",
+        element: <RecipeList />,
+      },
+      {
+        path: "recipe/:id",
+        element: <RecipeDetails />,
+      },
+      {
+        path: "buy-coins",
+        element: <BuyCoinsPage />,
       },
       {
         path: "add-recipes",

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import { LoadingPage } from "../LoadingPage";
 import { PRIVATE_ROUTE, PUBLIC_ROUTE } from "../../static/routes/routes";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { useAxiosSecure } from "../../hooks/useAxiosSecure";
+
+import { useDbUser } from "../../hooks/useDbUser";
 
 const Header = () => {
   const { user, logOut, googleSignIn } = useContext(AuthContext);
@@ -15,19 +14,8 @@ const Header = () => {
   );
   const navigate = useNavigate();
   const location = useLocation();
-  const [axiosSecure] = useAxiosSecure();
 
-  const { data: userData = {} } = useQuery({
-    queryKey: ["email", user?.email],
-    queryFn: async () => {
-      if (user?.email && localStorage.getItem("access-token")) {
-        const res = await axiosSecure.get(`/users/${user.email}`);
-        return res.data;
-      }
-      return {};
-    },
-    enabled: !!user?.email,
-  });
+  const userData = useDbUser(user?.email);
 
   const navBar = user ? PRIVATE_ROUTE : PUBLIC_ROUTE;
 
@@ -47,7 +35,9 @@ const Header = () => {
   const handleLogOut = () => {
     logOut().then(() => {
       toast.success("Log Out");
+      localStorage.setItem("route", "/");
       navigate("/");
+      window.location.reload();
     });
   };
 

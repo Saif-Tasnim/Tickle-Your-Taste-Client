@@ -1,0 +1,1 @@
+export {default as BuyCoinsPage} from './BuyCoinsPage.jsx'

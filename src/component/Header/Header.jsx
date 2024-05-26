@@ -74,6 +74,7 @@ const Header = () => {
       <Link
         to="/"
         className="px-6 py-4 flex items-center gap-1 rounded-sm cursor-pointer hover:opacity-80"
+        onClick={() => handleActiveRoute("/")}
       >
         <img src="/recipe-book.png" alt="" className="w-6 h-6" />
         <p className="text-2xl font-bold"> Tickle-Your-Taste </p>

@@ -1,16 +1,30 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import toast from "react-hot-toast";
-import { useDbUser } from "../../../../hooks/useDbUser";
+import { useCreatorUser, useDbUser } from "../../../../hooks/useDbUser";
 import showConfirmation from "../../../../utlis/showConfirmationToast";
+import { useAxiosSecure } from "../../../../hooks/useAxiosSecure";
 
 const RecipeCard = ({ recipe }) => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
 
   const userData = useDbUser(user?.email);
-  const creatorData = useDbUser(recipe?.creatorEmail);
+  const creatorData = useCreatorUser(recipe?.creatorEmail);
+
+  const buttonLabel =
+    recipe?.purchasedBy.find((rp) => rp === user?.email) ||
+    recipe?.creatorEmail === user?.email
+      ? "View Recipe"
+      : "Buy Recipe";
+
+  const btnClass =
+    recipe?.purchasedBy.find((rp) => rp === user?.email) ||
+    recipe?.creatorEmail === user?.email
+      ? "btn-secondary"
+      : "btn-error";
 
   const handleViewButton = () => {
     // case-1: if user not logged in then alert to log-in (done)
@@ -29,22 +43,55 @@ const RecipeCard = ({ recipe }) => {
         toast.error("You have insufficient coins");
         navigate("/buy-coins");
       }
+      // case-5: user Logged in and already purchase the recipe
+      else if (recipe.purchasedBy.find((rp) => rp === user?.email)) {
+        navigate(`/recipe/${recipe._id}`);
+      }
+
       // case-4: user logged in and have enough coins
       else {
         showConfirmation(
-          "Are you sure you want to buy the recipe with 10 coins?",
-          () => {
+          "Are you sure to buy the recipe with 10 coins?",
+          async () => {
             const presentCoinsUser = parseFloat(userData?.coins) - 10;
             const presentCoinsCreator = parseFloat(creatorData?.coins) + 1;
             const purchasedPerson = [...recipe.purchasedBy, user?.email];
             const newWatchCount = parseInt(recipe.watchCount) + 1;
 
-            // console.log("creator ==> ", presentCoinsCreator);
-            // console.log("user ==> ", presentCoinsUser);
-            // console.log("purchased list ==> ", purchasedPerson);
-            // console.log("watch ==> ", newWatchCount);
-
             // now post in api with cleaning data
+            const newUserData = {
+              ...userData,
+              coins: presentCoinsUser,
+            };
+
+            const newCreatorData = {
+              ...creatorData,
+              coins: presentCoinsCreator,
+            };
+
+            const newRecipeData = {
+              ...recipe,
+              purchasedBy: purchasedPerson,
+              watchCount: newWatchCount,
+            };
+
+            const compressObject = {
+              newUserData,
+              newCreatorData,
+              newRecipeData,
+            };
+
+            try {
+              const res = await axiosSecure.patch(
+                "/update-recipe",
+                compressObject
+              );
+              if (res) {
+                toast.success("you have purchased this recipe successfully");
+              }
+            } catch (error) {
+              toast.error(error.message);
+            }
           },
           () => {
             toast.error("cancelled");
@@ -52,20 +99,17 @@ const RecipeCard = ({ recipe }) => {
         );
       }
     }
-
-    // case-5: user Logged in and already purchase the recipe
-    if (
-      user?.email !== recipe?.creatorEmail &&
-      recipe.purchasedBy.find((rp) => rp === user?.email)
-    ) {
-      navigate(`/recipe/${recipe._id}`);
-    }
   };
+
   return (
     <div className="flex justify-between items-center">
       <div className="flex gap-7 items-center">
-        <div>
-          <img src={recipe.recipeImage} alt="" className="rounded-md" />
+        <div className="w-64 h-48">
+          <img
+            src={recipe.recipeImage}
+            alt=""
+            className="rounded-md w-full h-full"
+          />
         </div>
         <div className="flex flex-col gap-3">
           <h1 className="text-xl font-semibold">
@@ -81,7 +125,15 @@ const RecipeCard = ({ recipe }) => {
           </p>
           {recipe.purchasedBy.length > 0 ? (
             <>
-              <p> Purchased By : ${recipe.purchasedBy.length}</p>
+              <p>
+                {" "}
+                Purchased By :{" "}
+                {user?.email === recipe.creatorEmail
+                  ? recipe.purchasedBy.map((rp) => (
+                      <li className="text-sm italic ml-4 mt-1">{rp}</li>
+                    ))
+                  : recipe.purchasedBy.length}
+              </p>
             </>
           ) : (
             <p className="text-xs italic mt-3">
@@ -92,9 +144,8 @@ const RecipeCard = ({ recipe }) => {
         </div>
       </div>
       <div>
-        <button className="btn btn-secondary" onClick={handleViewButton}>
-          {" "}
-          View Recipe{" "}
+        <button className={`btn ${btnClass}`} onClick={handleViewButton}>
+          {buttonLabel}
         </button>
       </div>
     </div>

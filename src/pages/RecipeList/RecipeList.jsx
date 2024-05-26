@@ -19,9 +19,9 @@ const RecipeList = () => {
         All Recipe List{" "}
       </h1>
 
-      <div className="m-14 flex flex-col gap-6">
-        {recipeList.map((recipe) => (
-          <RecipeCard recipe={recipe} />
+      <div className="m-14 flex flex-col gap-10">
+        {recipeList.map((recipe, i) => (
+          <RecipeCard recipe={recipe} key={i} />
         ))}
       </div>
     </div>

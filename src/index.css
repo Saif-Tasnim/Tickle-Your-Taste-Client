@@ -26,3 +26,7 @@
   font-style: normal;
 }
 
+body{
+  @apply text-base font-regular text-gray-950 bg-gray-100
+}
+

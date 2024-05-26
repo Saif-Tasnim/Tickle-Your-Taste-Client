@@ -64,8 +64,8 @@ const Banner = () => {
         modules={[EffectFade, Pagination, Autoplay]}
         className="mySwiper"
       >
-        {BANNER.map((ban) => (
-          <SwiperSlide key={ban.slogan}>
+        {BANNER.map((ban,i) => (
+          <SwiperSlide key={i}>
             <SingleBanner ban={ban} />
           </SwiperSlide>
         ))}

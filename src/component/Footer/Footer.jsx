@@ -44,6 +44,13 @@ const Footer = () => {
             >
               Github
             </Link>
+            <Link
+              to="https://www.hackerrank.com/profile/saiftasnim2002"
+              target="_blank"
+              className="hover:underline"
+            >
+              Hacker Rank
+            </Link>
           </div>
         </div>
 

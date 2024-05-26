@@ -16,10 +16,10 @@ const RecipeDetails = () => {
 
   return (
     <div className="py-28">
-      <h1 className="text-3xl font-bold text-center">
+      <h1 className="text-xl md:text-3xl font-bold text-center">
         Recipe Name: {recipeData?.recipeName}
       </h1>
-      <div className="w-4/5 mx-auto pt-14 pb-4">
+      <div className="w-full md:w-4/5 mx-auto pt-14 pb-4">
         <p className="pb-2">
           <span className="font-semibold">Posted From :</span>{" "}
           {recipeData?.countryName}
@@ -30,31 +30,30 @@ const RecipeDetails = () => {
         </p>
       </div>
 
-      <div className="w-full h-[480px] pt-16">
+      <div className="w-full h-auto md:h-[480px] pt-16">
         <img
           src={recipeData?.recipeImage}
           alt=""
-          className="w-auto h-full block mx-auto object-cover rounded-md"
+          className="w-auto h-full block md:mx-auto object-cover rounded-md"
         />
       </div>
 
       <div className="w-4/5 mx-auto">
         <div className="pt-14 pb-8">
-          <h1 className="text-xl font-semibold pb-4">
+          <h1 className="text-lg md:text-xl font-semibold pb-4">
             Ingredients and Instructions{" "}
           </h1>
           {recipeData?.recipeDetails}
         </div>
 
         <div className="pt-10 pb-8">
-          <h1 className="text-xl font-semibold pb-4">Live Demonstration</h1>
+          <h1 className="text-lg md:text-xl font-semibold pb-4">Live Demonstration</h1>
 
           <iframe
-            width="560"
-            height="315"
             src={`https://www.youtube.com/embed/${recipeData?.embeddedCode}`}
             title={recipeData.recipeName}
             frameborder="0"
+            className="w-auto h-auto md:w-[560px] md:h-[315px]"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
@@ -65,9 +64,19 @@ const RecipeDetails = () => {
           <h1 className="text-xl font-semibold pb-4">More About Recipe</h1>
           <p className="pb-2">Posted By : {recipeData?.creatorEmail}</p>
           <p className="pb-2">Total Views : {recipeData?.watchCount}</p>
+
           <p className="pb-2">
-            Total Purchased : {recipeData?.purchasedBy?.length}
+            Total Purchased : {recipeData?.purchasedBy?.length}{" "}
           </p>
+
+          <h1 className="text-xl font-semibold pt-7 pb-1"> Purchased By :</h1>
+          <ul className="list-inside list-disc ml-5">
+            {user?.email === recipeData.creatorEmail
+              ? recipeData.purchasedBy.map((rp) => (
+                  <li className="italic">{rp}</li>
+                ))
+              : ""}
+          </ul>
         </div>
       </div>
     </div>

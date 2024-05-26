@@ -124,17 +124,7 @@ const RecipeCard = ({ recipe }) => {
             Country : {recipe.countryName}
           </p>
           {recipe.purchasedBy.length > 0 ? (
-            <>
-              <p>
-                {" "}
-                Purchased By :{" "}
-                {user?.email === recipe.creatorEmail
-                  ? recipe.purchasedBy.map((rp) => (
-                      <li className="text-sm italic ml-4 mt-1">{rp}</li>
-                    ))
-                  : recipe.purchasedBy.length}
-              </p>
-            </>
+            <p>Purchased By : {recipe.purchasedBy.length} persons </p>
           ) : (
             <p className="text-xs italic mt-3">
               {" "}

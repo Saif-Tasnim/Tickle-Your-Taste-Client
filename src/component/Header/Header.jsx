@@ -104,8 +104,9 @@ const Header = () => {
                 <img src={user?.photoURL} alt="user-photo" />
               </div>
             </label>
-            <div className="absolute hidden group-hover:flex flex-col justify-center -right-10 top-14 rounded-md">
-              <div className="py-2 text-nowrap">
+            
+            <div className="absolute hidden group-hover:flex flex-col gap-1 justify-center -right-10 top-14 rounded-md bg-sky-50 pb-1 shadow-lg">
+              <div className="text-nowrap">
                 <div className="flex gap-2 py-2 px-3 rounded-lg bg-purple-600 text-white">
                   <p className="text-base"> Current Coins : </p>
                   <p className="text-lg font-bold"> {userData.coins} </p>

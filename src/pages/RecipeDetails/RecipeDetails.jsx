@@ -47,7 +47,9 @@ const RecipeDetails = () => {
         </div>
 
         <div className="pt-10 pb-8">
-          <h1 className="text-lg md:text-xl font-semibold pb-4">Live Demonstration</h1>
+          <h1 className="text-lg md:text-xl font-semibold pb-4">
+            Live Demonstration
+          </h1>
 
           <iframe
             src={`https://www.youtube.com/embed/${recipeData?.embeddedCode}`}
@@ -69,14 +71,25 @@ const RecipeDetails = () => {
             Total Purchased : {recipeData?.purchasedBy?.length}{" "}
           </p>
 
-          <h1 className="text-xl font-semibold pt-7 pb-1"> Purchased By :</h1>
-          <ul className="list-inside list-disc ml-5">
-            {user?.email === recipeData.creatorEmail
-              ? recipeData.purchasedBy.map((rp) => (
-                  <li className="italic">{rp}</li>
-                ))
-              : ""}
-          </ul>
+          {user?.email === recipeData.creatorEmail ? (
+            <>
+              <h1 className="text-xl font-semibold pt-7 pb-1">
+                {" "}
+                Purchased By :
+              </h1>
+              <ul className="list-inside list-disc ml-5">
+                {recipeData.purchasedBy.length === 0 ? (
+                  <p>Till now none 🥺</p>
+                ) : (
+                  recipeData.purchasedBy.map((rp) => (
+                    <li className="italic">{rp}</li>
+                  ))
+                )}
+              </ul>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

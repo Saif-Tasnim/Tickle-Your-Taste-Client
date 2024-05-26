@@ -23,7 +23,7 @@ const InfoSwiper = () => {
         modules={[EffectFlip, Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide className="bg-indigo-500">
+        <SwiperSlide className="bg-orange-500">
           <div className="h-[332px] flex flex-col justify-center items-center">
             <h1 className="text-3xl font-bold">{DEV_INFO.name}</h1>
             <p className="text-xl py-8 italic">{DEV_INFO.bio}</p>
@@ -54,7 +54,7 @@ const InfoSwiper = () => {
             />
           </SwiperSlide>
         ))}
-        <SwiperSlide className="bg-indigo-500">
+        <SwiperSlide className="bg-yellow-500">
           <div className="h-[332px] flex flex-col justify-center items-center">
             <h1 className="text-xl font-bold underline">Technologies</h1>
             <div className="flex gap-32 justify-center items-center py-8">

@@ -6,6 +6,7 @@ import {
   AddRecipe,
   BuyCoinsPage,
   HomePage,
+  PaymentPage,
   RecipeDetails,
   RecipeList,
 } from "../pages";
@@ -26,11 +27,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "recipe/:id",
-        element: <RecipeDetails />,
+        element: (
+          <PrivateRoutes>
+            <RecipeDetails />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "buy-coins",
-        element: <BuyCoinsPage />,
+        element: (
+          <PrivateRoutes>
+            <BuyCoinsPage />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "payment-gateway/:id",
+        element: (
+          <PrivateRoutes>
+            <PaymentPage />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "add-recipes",

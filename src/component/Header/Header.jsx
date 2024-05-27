@@ -45,7 +45,7 @@ const Header = () => {
     googleSignIn()
       .then((res) => {
         axios
-          .post("http://localhost:5000/store-user", {
+          .post("https://reciepe-server.vercel.app/store-user", {
             name: res.user.displayName,
             photo: res.user.photoURL,
             email: res.user.email,

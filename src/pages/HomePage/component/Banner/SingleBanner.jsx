@@ -1,7 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../providers/AuthProvider";
+import toast from "react-hot-toast";
 
 const SingleBanner = ({ ban }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleAddButton = () => {
+    if (!user) {
+      toast.error("Please login-first");
+      navigate("/");
+    } else {
+      navigate("/add-recipes");
+    }
+  };
   return (
     <div
       className="bg-cover bg-no-repeat h-[80vh] bg-gradient-to-r"
@@ -21,8 +34,11 @@ const SingleBanner = ({ ban }) => {
             <Link to="/recipes">See Recipes</Link>{" "}
           </button>
         </Link>
-        <button className="btn btn-outline-secondary btn-md bg-amber-100 border-amber-100 hover:border-0">
-          <Link to="/add-recipes">Add Recipe </Link>{" "}
+        <button
+          className="btn btn-outline-secondary btn-md bg-amber-100 border-amber-100 hover:border-0"
+          onClick={handleAddButton}
+        >
+          Add Recipe{" "}
         </button>
       </div>
     </div>

@@ -3,15 +3,22 @@ import React from "react";
 import axios from "axios";
 import { RecipeCard } from "./component";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingPage from "../../component/LoadingPage/LoadingPage";
 
 const RecipeList = () => {
-  const { data: recipeList = [] } = useQuery({
+  const { data: recipeList = [], isLoading } = useQuery({
     queryKey: ["recipes"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/get-recipe");
+      const res = await axios.get(
+        "https://reciepe-server.vercel.app/get-recipe"
+      );
       return res.data;
     },
   });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <div className="pt-28 pb-10">

@@ -23,7 +23,7 @@ const RecipeList = () => {
   return (
     <div className="pt-28 pb-10">
       <h1 className="text-3xl font-semibold underline text-center">
-        All Recipe List{" "}
+        All Recipe List
       </h1>
       <InfiniteScroll
         dataLength={recipeList.length}
@@ -35,7 +35,7 @@ const RecipeList = () => {
           </p>
         }
       >
-        <div className="m-14 flex flex-col gap-10">
+        <div className="my-14 md:m-14 flex flex-col gap-10">
           {recipeList.map((recipe, i) => (
             <RecipeCard recipe={recipe} key={i} />
           ))}

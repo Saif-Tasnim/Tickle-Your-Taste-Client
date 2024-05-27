@@ -19,7 +19,7 @@ const RecipeDetails = () => {
       <h1 className="text-xl md:text-3xl font-bold text-center">
         Recipe Name: {recipeData?.recipeName}
       </h1>
-      <div className="w-full md:w-4/5 mx-auto pt-14 pb-4">
+      <div className="w-full ml-3 md:w-4/5 md:mx-auto pt-14 pb-4">
         <p className="pb-2">
           <span className="font-semibold">Posted From :</span>{" "}
           {recipeData?.countryName}
@@ -30,7 +30,7 @@ const RecipeDetails = () => {
         </p>
       </div>
 
-      <div className="w-full h-auto md:h-[480px] pt-16">
+      <div className="w-full ml-3 md:ml-0 h-auto md:h-[480px] pt-16">
         <img
           src={recipeData?.recipeImage}
           alt=""
@@ -38,7 +38,7 @@ const RecipeDetails = () => {
         />
       </div>
 
-      <div className="w-4/5 mx-auto">
+      <div className="mx-5 md:w-4/5 md:mx-auto">
         <div className="pt-14 pb-8">
           <h1 className="text-lg md:text-xl font-semibold pb-4">
             Ingredients and Instructions{" "}

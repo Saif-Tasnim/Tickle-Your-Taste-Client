@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <section className="bg-zinc-400">
-      <div className="pt-28 grid grid-cols-3 gap-12 items-center border-b border-black px-10 py-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-12 items-center border-b border-black px-3 py-3 md:px-10 md:py-5">
+        
         <div className="flex gap-3 items-center">
-          <img src={image} alt="" className="w-10 h-10" />
+          <img src={image} alt="" className="hidden md:block w-10 h-10" />
           <p className="font-bold text-xl">Tickle-Your-Taste</p>
         </div>
+        
         <div>
           <h1 className="text-black font-semibold underline mb-2">
             {" "}

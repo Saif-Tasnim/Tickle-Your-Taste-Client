@@ -14,7 +14,7 @@ const DevInfo = () => {
       </p>
 
       <h1 className="text-center my-12 text-xl italic">Have a Look In Short ......</h1>
-      <div className="w-1/2 mx-auto h-auto">
+      <div className="w-[92%] md:w-1/2 mx-auto h-auto">
       <InfoSwiper />
       </div>
 

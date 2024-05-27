@@ -25,8 +25,8 @@ const InfoSwiper = () => {
       >
         <SwiperSlide className="bg-orange-500">
           <div className="h-[332px] flex flex-col justify-center items-center">
-            <h1 className="text-3xl font-bold">{DEV_INFO.name}</h1>
-            <p className="text-xl py-8 italic">{DEV_INFO.bio}</p>
+            <h1 className="text-2xl md:text-3xl font-bold">{DEV_INFO.name}</h1>
+            <p className="mx-8 md:mx-0 md:text-xl py-8 italic">{DEV_INFO.bio}</p>
           </div>
         </SwiperSlide>
 
@@ -58,12 +58,12 @@ const InfoSwiper = () => {
           <div className="h-[332px] flex flex-col justify-center items-center">
             <h1 className="text-xl font-bold underline">Technologies</h1>
             <div className="flex gap-32 justify-center items-center py-8">
-              <div>
+              <div className="pl-7 md:pl-0">
                 {firstHalf.map((tec) => (
                   <p className="text-lg pb-2">{tec}</p>
                 ))}
               </div>
-              <div>
+              <div className="pr-7 md:pr-0">
                 {secondHalf.map((tec) => (
                   <p className="text-lg pb-2">{tec}</p>
                 ))}

@@ -6,18 +6,19 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 import { useDbUser } from "../../hooks/useDbUser";
+import MobileResponsiveHeader from "./MobileResponsiveHeader";
 
 const Header = () => {
   const { user, logOut, googleSignIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const userData = useDbUser(user?.email);
+  const navBar = user ? PRIVATE_ROUTE : PUBLIC_ROUTE;
+  const [isOpen, setOpen] = useState(false);
+
   const [activeRoute, setActiveRoute] = useState(
     localStorage.getItem("route") || "/"
   );
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const userData = useDbUser(user?.email);
-
-  const navBar = user ? PRIVATE_ROUTE : PUBLIC_ROUTE;
 
   if (!user && location.state?.from?.pathname) {
     toast.error("log-in first please");
@@ -70,17 +71,20 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed w-full h-16 flex justify-between items-center bg-purple-100 z-40 px-5">
+    <div className="fixed w-full h-16 flex justify-between items-center bg-purple-100 z-40 md:px-5">
       <Link
         to="/"
         className="px-6 py-4 flex items-center gap-1 rounded-sm cursor-pointer hover:opacity-80"
         onClick={() => handleActiveRoute("/")}
       >
-        <img src="/recipe-book.png" alt="" className="w-6 h-6" />
-        <p className="text-2xl font-bold"> Tickle-Your-Taste </p>
+        <img src="/recipe-book.png" alt="" className="w-8 h-8 md:w-6 md:h-6" />
+        <p className="text-2xl font-bold hidden md:block">
+          {" "}
+          Tickle-Your-Taste{" "}
+        </p>
       </Link>
 
-      <div>
+      <div className="hidden md:block">
         {navBar.map(({ href, label }) => (
           <Link
             key={href}
@@ -96,7 +100,7 @@ const Header = () => {
         ))}
       </div>
 
-      <div className="px-6">
+      <div className="px-6 hidden md:block">
         {user ? (
           <div className="relative group">
             <label className="popover-trigger my-2 cursor-pointer">
@@ -104,7 +108,7 @@ const Header = () => {
                 <img src={user?.photoURL} alt="user-photo" />
               </div>
             </label>
-            
+
             <div className="absolute hidden group-hover:flex flex-col gap-1 justify-center -right-10 top-14 rounded-md bg-sky-50 pb-1 shadow-lg">
               <div className="text-nowrap">
                 <div className="flex gap-2 py-2 px-3 rounded-lg bg-purple-600 text-white">
@@ -125,6 +129,18 @@ const Header = () => {
             Google Sign In
           </button>
         )}
+      </div>
+
+      <div className="block md:hidden">
+        <MobileResponsiveHeader
+          isOpen={isOpen}
+          setOpen={setOpen}
+          user={user}
+          navBar={navBar}
+          coins={userData.coins}
+          handleLogOut={handleLogOut}
+          handleSignIn={handleSignIn}
+        />
       </div>
     </div>
   );

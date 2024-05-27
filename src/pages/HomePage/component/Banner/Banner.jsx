@@ -2,7 +2,6 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/bundle";
 import { EffectFade, Pagination, Autoplay } from "swiper/modules";
-
 import img1 from "../../../../assets/banner/banner-1.jpeg";
 import img2 from "../../../../assets/banner/banner-2.jpeg";
 import img4 from "../../../../assets/banner/banner-4.jpeg";

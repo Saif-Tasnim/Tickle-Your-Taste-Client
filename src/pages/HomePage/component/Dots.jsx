@@ -2,7 +2,7 @@ import React from "react";
 
 const Dots = () => {
   return (
-    <div className="mt-20 mb-12  w-3/4 mx-auto flex gap-3 items-center">
+    <div className="mt-20 mb-12 w-[80%] md:w-3/4 mx-auto flex gap-3 items-center">
       <hr className="border-purple-800 w-96 ml-10" />
       <div
         style={{

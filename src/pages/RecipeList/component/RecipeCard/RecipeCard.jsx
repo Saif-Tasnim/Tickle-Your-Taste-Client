@@ -102,29 +102,33 @@ const RecipeCard = ({ recipe }) => {
   };
 
   return (
-    <div className="flex justify-between items-center">
-      <div className="flex gap-7 items-center">
-        <div className="w-64 h-48">
+    <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="flex gap-3 md:gap-7 items-center">
+        <div className="w-36 h-auto md:w-64 md:h-48">
           <img
             src={recipe.recipeImage}
             alt=""
             className="rounded-md w-full h-full"
           />
         </div>
-        <div className="flex flex-col gap-3">
-          <h1 className="text-xl font-semibold">
+
+        <div className="flex flex-col gap-2 md:gap-3">
+          <h1 className="md:text-xl font-semibold">
             Recipe Name : {recipe.recipeName}
           </h1>
-          <h3 className="text-base font-normal">
+          <h3 className="text-sm md:text-base font-normal">
             {" "}
-            Creator Email : {recipe.creatorEmail}
+            <span className="hidden md:inline">Creator Email :</span>{" "}
+            {recipe.creatorEmail}
           </h3>
-          <p className="text-base font-normal">
+          <p className="text-sm md:text-base font-normal">
             {" "}
             Country : {recipe.countryName}
           </p>
           {recipe.purchasedBy.length > 0 ? (
-            <p>Purchased By : {recipe.purchasedBy.length} persons </p>
+            <p className="text-sm md:text-base text-nowrap">
+              Purchased By : {recipe.purchasedBy.length} persons{" "}
+            </p>
           ) : (
             <p className="text-xs italic mt-3">
               {" "}
@@ -133,8 +137,11 @@ const RecipeCard = ({ recipe }) => {
           )}
         </div>
       </div>
-      <div>
-        <button className={`btn ${btnClass}`} onClick={handleViewButton}>
+      <div className="ml-36 mt-3 md:ml-0 md:mt-0">
+        <button
+          className={`btn ${btnClass} text-nowrap`}
+          onClick={handleViewButton}
+        >
           {buttonLabel}
         </button>
       </div>

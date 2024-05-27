@@ -79,7 +79,7 @@ const AddRecipe = () => {
         Add Recipe Here{" "}
       </h1>
 
-      <div className="py-7 w-1/4 mx-auto">
+      <div className="py-7 w-full lg:w-1/4 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <InputField
             type="text"

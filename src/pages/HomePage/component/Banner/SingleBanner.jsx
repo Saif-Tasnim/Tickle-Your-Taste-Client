@@ -23,7 +23,7 @@ const SingleBanner = ({ ban }) => {
       }}
     >
       <div className="w-full text-center">
-        <h1 className="text-4xl text-purple-400 font-extrabold z-50 bg-stone-300 shadow-2xl px-4 py-3 italic">
+        <h1 className="text-xl md:text-4xl text-purple-400 font-extrabold z-50 bg-stone-300 shadow-2xl px-4 py-3 italic">
           {ban.slogan}
         </h1>
       </div>

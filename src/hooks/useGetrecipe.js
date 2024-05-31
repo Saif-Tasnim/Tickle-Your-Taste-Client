@@ -8,8 +8,7 @@ export const useGetRecipe = (email, id) => {
     queryKey: ["id", id],
     queryFn: async () => {
       if (email && localStorage.getItem("access-token")) {
-        // const res = await axiosSecure.get(`/get-recipe/${id}`);
-        const res = await axiosSecure.get(`http://localhost:5000/get-recipe/${id}`);
+        const res = await axiosSecure.get(`/get-recipe/${id}`);
         return res.data;
       }
       return {};

@@ -28,7 +28,7 @@ const RecipeDetails = () => {
 
       if (newLike !== prevReactions) {
         axios
-          .patch(`http://localhost:5000/post-reactions/${id}`, updateData)
+          .patch(`https://reciepe-server.vercel.app/post-reactions/${id}`, updateData)
           .then((res) => {
             if (res.data.modifiedCount > 0) {
               toast.success("Like it");

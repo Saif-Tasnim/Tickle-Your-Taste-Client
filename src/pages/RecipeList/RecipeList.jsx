@@ -21,7 +21,7 @@ const RecipeList = () => {
     queryKey: ["recipes"],
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/get-recipe?page=${page}`
+        `https://reciepe-server.vercel.app/get-recipe?page=${page}`
       );
       if (res.data.length === 0) {
         setLoadMore(false);
@@ -44,7 +44,7 @@ const RecipeList = () => {
 
   const handleSearchInput = async (value) => {
     const lower = value.toLowerCase();
-    const res = await axios.get(`http://localhost:5000/get-recipes/${lower}`);
+    const res = await axios.get(`https://reciepe-server.vercel.app/get-recipes/${lower}`);
     setAllData(res.data);
   };
 

@@ -1,18 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetRecipe } from "../../hooks/useGetrecipe";
 import { AuthContext } from "../../providers/AuthProvider";
 import LoadingPage from "../../component/LoadingPage/LoadingPage";
+import emptyImg from "../../assets/reactions/empty.png";
+import fillImg from "../../assets/reactions/fill.png";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const RecipeDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-
   const [recipeData, isLoading] = useGetRecipe(user?.email, id);
+  const prevReactions = recipeData?.reactions?.find((rt) => rt === user?.email)
+    ? true
+    : false;
+  const [like, setLike] = useState(prevReactions || false);
 
   if (isLoading) {
     return <LoadingPage />;
   }
+
+  const handleSetLike = async () => {
+    setLike((prevLike) => {
+      const newLike = !prevLike;
+      const updateData = { email: user?.email };
+
+      if (newLike !== prevReactions) {
+        axios
+          .patch(`http://localhost:5000/post-reactions/${id}`, updateData)
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              toast.success("Like it");
+            } else {
+              toast.error("error occurred");
+            }
+          });
+      }
+      return newLike;
+    });
+  };
 
   return (
     <div className="py-28">
@@ -61,6 +88,17 @@ const RecipeDetails = () => {
             allowfullscreen
           ></iframe>
         </div>
+
+        <div className="my-9">
+          <button onClick={handleSetLike}>
+            <img
+              src={like ? fillImg : emptyImg}
+              alt="like it!!"
+              className="w-10 h-10 hover:scale-105"
+            />
+          </button>
+        </div>
+        <hr className="mt-7" />
 
         <div className="pt-14 pb-4">
           <h1 className="text-xl font-semibold pb-4">More About Recipe</h1>
